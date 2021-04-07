@@ -1,0 +1,57 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LOGIN PAGE</title>
+        <style>
+            body {
+                height: 700px;
+                background-image: linear-gradient(rgb(42, 181, 228), rgb(188, 219, 230), rgb(42, 181, 228));
+            }
+            a:link, a:visited {
+                background-color: rgb(0, 0, 0);
+                color: white;
+                padding: 10px 15px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+            }
+            a:hover, a:active {
+                background-color: red;
+            }
+            button {
+            background-color: rgb(0, 0, 0);
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            }
+            button:hover, button:active {
+                background-color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form method = "POST">
+                {% csrf_token %}
+                {{form|crispy}}
+                <div>
+                    <br>
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+            <div><br>
+                <h3>Need an account ?</h3><a href="{% url 'register' %}">Sign Up Here</a>
+            </div>
+        </div>
+    </body>
+</html>
