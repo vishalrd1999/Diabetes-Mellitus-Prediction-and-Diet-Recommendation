@@ -32,10 +32,7 @@ def result(request):
     
     family_history = str(request.POST.get('family_history'))
     us.profile.fam = family_history
-    
-    blood_pressure = str(request.POST.get('blood_pressure'))
-    us.profile.bp = blood_pressure
-    
+        
     physical_activity = str(request.POST.get('physical_activity'))
     us.profile.phy = physical_activity
     
@@ -50,9 +47,6 @@ def result(request):
     
     sleep_hours = int(request.POST.get('sleep_hours'))
     us.profile.sleep = sleep_hours
-    
-    sound_sleep_hours = int(request.POST.get('sound_sleep_hours'))
-    us.profile.sound_sleep = sound_sleep_hours
     
     regular_medicine = str(request.POST.get('regular_medicine'))
     us.profile.med = regular_medicine
@@ -92,11 +86,6 @@ def result(request):
         fam_p = 1
     elif(family_history=="no"):
         fam_p = 0
-
-    if (blood_pressure=="yes"):
-        bp_p = 1
-    elif(blood_pressure=="no"):
-        bp_p = 0
 
     if (physical_activity=="none"):
         phy_p = 4
@@ -152,8 +141,8 @@ def result(request):
     elif(urination_frequency=="quite often"):
         uri_p= 0
 
-    X_test = [[age_p,gen_p,fam_p,bp_p,phy_p,bmi,smoking_p,alco_p,sleep_hours,
-                sound_sleep_hours,med_p,junk_p,stress_p,bpl_p,pregnancies,uri_p]]
+    X_test = [[age_p,gen_p,fam_p,phy_p,bmi,smoking_p,alco_p,sleep_hours,
+                med_p,junk_p,stress_p,bpl_p,pregnancies,uri_p]]
     pickle_in = open("D:\BE\model\RF.pickle","rb")
 
     linear = pickle.load(pickle_in)
@@ -168,9 +157,9 @@ def result(request):
         ret = "negative"
 
     context = {'age' : age,'gender' : gender,'family_history' : family_history,
-    'blood_pressure' : blood_pressure,'physical_activity' : physical_activity,'bmi' : bmi,
+    'physical_activity' : physical_activity,'bmi' : bmi,
     'smoking' : smoking,'alcohol' : alcohol,'sleep_hours' : sleep_hours,
-    'sound_sleep_hours' : sound_sleep_hours,'regular_medicine' : regular_medicine,'junkfood' : junkfood,
+    'regular_medicine' : regular_medicine,'junkfood' : junkfood,
     'stress' : stress,'blood_pressure_level' : blood_pressure_level,
     'pregnancies' : pregnancies,'urination_frequency' : urination_frequency,'pred_result': ret}
 

@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat May 29 11:39:55 2021
+
+@author: Aishwarya
+"""
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,7 +16,8 @@ from sklearn.metrics import confusion_matrix
 from sklearn import preprocessing
 import pickle
 
-data1=pd.read_csv("D:\BE\model\diabetes_dataset.csv")
+
+data1=pd.read_csv("D:\\4 BE sem1 prac\\BE Project\\diabetes_dataset.csv")
 
 def preprocess(data , notest = True):
     le = preprocessing.LabelEncoder() 
@@ -49,15 +56,17 @@ def preprocess(data , notest = True):
     
     data['Age'].replace({'less than 40':1,'40-49':2,'50-59':3,'60 or older':4}, inplace=True)
     
-    
+   
     del data['Pdiabetes']
+    del data['highBP']
+    del data['SoundSleep']
     
     if(notest) :
         data['Diabetic'].replace(' no',0,inplace=True) 
    
     data['RegularMedicine'].replace('o',0,inplace=True) 
     data = data.dropna()
- 
+   
     return data 
     
 
@@ -72,7 +81,7 @@ def scaler_(data) :
     
     X=s_data
     
-    x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.35,random_state=5)
+    x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size=0.30,random_state=5)
     
     return scaler , x_train , x_test , y_train , y_test
 
@@ -80,9 +89,13 @@ def scaler_(data) :
 def randomforest(x_train,x_test,y_train,y_test):
     forest = RandomForestClassifier(n_estimators = 10, random_state = 7) 
     forest.fit(x_train, y_train)
+  
+
+   
+    
 
     #Write the trained model to pickle file
-    with open(r"D:\BE\model\trained_model.pickle","wb") as f:
+    with open(r"D:\4 BE sem1 prac\BE Project\trained_model.pickle","wb") as f:
         pickle.dump(forest, f)
     
 preprocessed_Data = preprocess(data1)
